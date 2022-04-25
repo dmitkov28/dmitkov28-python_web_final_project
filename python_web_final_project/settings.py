@@ -102,9 +102,9 @@ DATABASES = {
     'default': DB
 }
 
-if not is_development():
+if os.getenv('APP_ENVIRONMENT') == 'Production':
     DATABASES['default'] = dj_database_url.config()
-    
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
