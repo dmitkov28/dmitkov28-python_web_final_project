@@ -105,9 +105,13 @@ DEV_DB = {
     'PORT': env('DB_PORT'),
 }
 
+
+#use development postgres if environment is development
 DATABASES = {
     'default': DEV_DB if is_development() else dj_database_url.config(conn_max_age=600, ssl_require=True),
 }
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
