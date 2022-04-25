@@ -102,6 +102,10 @@ DATABASES = {
     'default': DB
 }
 
+if not is_development():
+    DATABASES['default'] = dj_database_url.config()
+    
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
