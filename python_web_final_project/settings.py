@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'python_web_final_project.wsgi.application'
 #     }
 # }
 
-DEV_DB = {
+DB = {
     'ENGINE': 'django.db.backends.postgresql',
     'NAME': os.getenv('DB_NAME'),
     'USER': os.getenv('DB_USER'),
@@ -99,7 +99,7 @@ DEV_DB = {
 
 # use development postgres if environment is development
 DATABASES = {
-    'default': DEV_DB if is_development() else dj_database_url.config(conn_max_age=600, ssl_require=True),
+    'default': DB
 }
 
 AUTH_PASSWORD_VALIDATORS = [
