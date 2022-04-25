@@ -2,6 +2,7 @@ asgiref==3.5.0
 certifi==2021.10.8
 cloudinary==1.29.0
 coverage==6.3.2
+dj-config-url==0.1.1
 Django==4.0.4
 django-environ==0.8.1
 django-widget-tweaks==1.4.12

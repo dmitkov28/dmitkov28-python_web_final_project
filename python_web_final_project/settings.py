@@ -1,8 +1,8 @@
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 import cloudinary
+import dj_database_url
 import environ
 from django.urls import reverse_lazy
 
@@ -14,6 +14,9 @@ env = environ.Env(
 
 environ.Env.read_env(BASE_DIR / '.env')
 
+def is_development():
+    return env('APP_ENVIRONMENT') == 'Development'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -23,7 +26,10 @@ SECRET_KEY = 'django-insecure-9+nnt%!(osre3k)pjldbqw^zxf$sgorsd)4@84dg63*8-x&+0*
 DEBUG = True
 
 ALLOWED_HOSTS = [
-
+    '0.0.0.0',
+    'localhost',
+    '127.0.0.1',
+    'job-market-softuni.herokuapp.com',
 ]
 
 # Application definition
@@ -83,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'python_web_final_project.wsgi.application'
 
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -91,17 +96,18 @@ WSGI_APPLICATION = 'python_web_final_project.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
-    }
+DEV_DB = {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': env('DB_NAME'),
+    'USER': env('DB_USER'),
+    'PASSWORD': env('DB_PASSWORD'),
+    'HOST': env('DB_HOST'),
+    'PORT': env('DB_PORT'),
 }
 
+DATABASES = {
+    'default': DEV_DB if is_development() else dj_database_url.config(conn_max_age=600, ssl_require=True),
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -136,7 +142,6 @@ STATICFILES_DIRS = (
     (BASE_DIR / 'static'),
 )
 
-
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
@@ -151,7 +156,6 @@ AUTH_USER_MODEL = 'accounts_app.CustomUser'
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGIN_URL = reverse_lazy('login')
-
 
 cloudinary.config(
     cloud_name=env('CLOUDINARY_CLOUD_NAME', None),
