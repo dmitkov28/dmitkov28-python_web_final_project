@@ -6,10 +6,16 @@
             <h1 class="my-3">Edit Company Profile</h1>
             <div class="row g-3 mb-5 align-items-end">
 
-                <div class="col-md-12 my-3">
+                <div class="col-md-6 my-3">
                     {{ form.name.label }}
                     {{ form.name|add_class:'form-control' }}
                     <span class="text-danger">{{ form.name.errors }}</span>
+                </div>
+
+                  <div class="col-md-6 my-3">
+                    {{ form.employees.label }}
+                    {{ form.employees|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.employees.errors }}</span>
                 </div>
 
                 <div class="col-md-12 my-3">
