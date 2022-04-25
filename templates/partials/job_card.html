@@ -1,0 +1,86 @@
+{% load static %}
+<div class="card mb-5 col-md-12">
+    <div class="row g-0">
+        <div class="col-md-2 d-flex align-items-center">
+            {% if job.company.companyprofile.logo %}
+                <img class="img-fluid" src="{{ job.company.companyprofile.logo.url }}">
+            {% else %}
+                <img class="img-fluid" src="{% static 'img/default_company_logo.png' %}" alt="">
+            {% endif %}
+        </div>
+        <div class="col-md-10">
+            <div class="card-body">
+                <h5 class="card-title mb-3">
+                    {{ job.role }}
+                    {% if request.user.is_authenticated and not request.user.is_company %}
+                        {% if request.user not in job.bookmarked_by.all %}
+                            <a href="{% url 'bookmark' job.pk %}"><i class="bi bi-bookmark"></i></a>
+                        {% else %}
+                            <a href="{% url 'bookmark' job.pk %}"><i class="bi bi-bookmark-fill"></i></a>
+                        {% endif %}
+                    {% endif %}
+                </h5>
+
+                <p class="card-text">
+                    <small class="text-muted row">
+                        <a class="text-decoration-none col-md-auto"
+                           href="{% url 'company profile' job.company.pk %}"><i
+                                class="bi bi-building"></i> {{ job.company.companyprofile.name }}</a>
+
+                        {% if job.location %}
+                            <span class="col-md-auto">
+                            <i class="bi bi-geo-alt-fill"></i> {{ job.location }}
+                            </span>
+                        {% elif job.city %}
+                            <span class="col-md-auto">
+                             <i class="bi bi-geo-alt-fill"></i> {{ job.city }}
+                            </span>
+
+                        {% elif job.country %}
+                            <span class="col-md-auto">
+                            <i class="bi bi-geo-alt-fill"></i> {{ job.country }}
+                            </span>
+                        {% else %}
+                        {% endif %}
+
+                        {% if job.experience_level %}
+                            <span class="col-md-auto">
+                            <i class="bi bi-diagram-3-fill"></i>
+                          {{ job.experience_level }}
+                        </span>
+
+                        {% endif %}
+
+                        {% if job.work_schedule %}
+                            <span class="col-md-auto">
+                                <i class="bi bi-clock ml-3"></i> {{ job.work_schedule }}
+                            </span>
+
+                        {% endif %}
+
+                    </small></p>
+
+                <p class="card-text">{{ job.description|truncatechars:300 }}</p>
+
+                <p><a href="{% url 'job details' job.pk %}">See more</a></p>
+                <p class="card-text"><small class="text-muted">{{ job.date_added | date }}</small></p>
+
+                {% if can_edit %}
+                    <div class="row g-3">
+                        <span class="col-auto my-2">
+                            <form action="{% url 'delete job' job.pk %}" method="POST">
+                            <button class="btn btn-danger mx-auto" href="{% url 'delete job' job.pk %}">Delete</button>
+                            {% csrf_token %}
+                            </form>
+                        </span>
+                        <span class="col-auto my-2">
+                            <a class="btn btn-info"
+                               href="{% url 'applications for job' job.pk %}">View Applications ({{ job.jobapplication_set.all.count }})</a>
+
+                        </span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

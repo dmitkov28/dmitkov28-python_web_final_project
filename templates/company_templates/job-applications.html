@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+    <div class="container">
+        <h1 class="text-center my-3">Applications</h1>
+        {% if not job_applications %}
+            <p class="my-3 text-center">There are no applications for this job.</p>
+        {% else %}
+            <div class="row g-3">
+                {% for application in job_applications %}
+                    <div class="card col-md-8 mx-auto my-5">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Candidate: <span
+                                    class="fw-light text-primary"> {{ application.user.applicantprofile.full_name }}</span>
+                            </h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item my-3"><span class="fw-bold">Message: </span>{{ application.message }}
+                            </li>
+                            {% if application.cv %}
+                                <li class="list-group-item my-2"><span class="fw-bold">CV: </span><a
+                                        class="text-decoration-none" href="{{ application.cv.url }}"><i
+                                        class="bi bi-download"></i> Download CV</a></li>
+                            {% endif %}
+                            {% if application.additional_documents %}
+                                <li class="list-group-item my-2"><span class="fw-bold">Additional Documents: </span><a
+                                        class="text-decoration-none" href="{{ application.additional_documents.url }}"><i
+                                        class="bi bi-download"></i> Download Documents</a></li>
+                            {% endif %}
+                        </ul>
+                        <div class="card-body">
+                            <a href="{% url 'applicant profile' application.user.pk %}" class="card-link btn btn-primary">View Profile</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

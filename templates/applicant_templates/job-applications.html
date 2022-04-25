@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <div class="container">
+        <h1 class="my-3 text-center">Job Applications</h1>
+        {% if not job_applications %}
+            <p class="text-center">No job applications.</p>
+        {% else %}
+            <div class="accordion my-3" id="jobApplicationsAccordion">
+                {% for application in job_applications %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button bg-white" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse-{{ application.pk }}" aria-expanded="true">
+                        <span class="fw-bold">
+                            {{ application.job.role }} ({{ application.job.company.companyprofile.name }}) [{{ application.date_added|date }}]
+                        </span>
+                            </button>
+                        </h2>
+                        <div id="collapse-{{ application.pk }}" class="accordion-collapse collapse"
+                             data-bs-parent="#jobApplicationsAccordion">
+                            <div class="accordion-body">
+                                <ul class="p-0">
+                                    {% if application.message %}
+                                        <li class="list-unstyled my-2">
+                                            <span class="fw-bold">Message:</span> {{ application.message }}
+                                        </li>
+                                    {% endif %}
+                                    {% if application.cv %}
+                                        <li class="list-unstyled my-2">
+                                            <span class="fw-bold">CV: </span><a href="{{ application.cv.url }}">Link</a>
+                                        </li>
+                                    {% endif %}
+                                    {% if application.additional_documents %}
+                                        <li class="list-unstyled my-2">
+                                            <span class="fw-bold">Additional Documents: </span><a
+                                                href="{{ application.additional_documents.url }}">Link</a>
+                                        </li>
+                                    {% endif %}
+                                    <li class="list-unstyled my-2 text-center"><a
+                                            href="{% url 'job details' application.job.pk %}">View Job</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="container pb-3">
+        <form method="POST">
+            <h1 class="text-center my-4">Add Job</h1>
+            <div class="row g-3 w-100">
+
+                <div class="col-md-4">
+                    {{ form.role.label }}
+                    {{ form.role|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.role.errors }}</span>
+                </div>
+
+                <div class="col-md-4">
+                    {{ form.location.label }}
+                    {{ form.location|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.location.errors }}</span>
+                </div>
+
+                <div class="col-md-2">
+                    {{ form.experience_level.label }}
+                    {{ form.experience_level|add_class:'form-select' }}
+                    <span class="text-danger">{{ form.experience.errors }}</span>
+
+                </div>
+
+                <div class="col-md-2">
+                    {{ form.work_schedule.label }}
+                    {{ form.work_schedule|add_class:'form-select' }}
+                    <span class="text-danger">{{ form.work_schedule.errors }}</span>
+
+                </div>
+
+                <div class="col-md-12">
+                    {{ form.description.label }}
+                    {{ form.description|add_class:'form-control'|attr:'rows:5' }}
+                    <span class="text-danger">{{ form.description.errors }}</span>
+
+                </div>
+
+                <div class="col-md-12">
+                    {{ form.responsibilities.label }}
+                    {{ form.responsibilities|add_class:'form-control'|attr:'rows:5' }}
+                    <span class="text-danger">{{ form.responsibilities.errors }}</span>
+
+                </div>
+
+                <div class="col-md-12">
+                    {{ form.requirements.label }}
+                    {{ form.requirements|add_class:'form-control'|attr:'rows:5' }}
+                    <span class="text-danger">{{ form.requirements.errors }}</span>
+
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.country.label }}
+                    {{ form.country|add_class:'form-control'|attr:'rows:5' }}
+                    <span class="text-danger">{{ form.country.errors }}</span>
+
+                </div>
+
+                <div class="col-md-6">
+                    {{ form.city.label }}
+                    {{ form.city|add_class:'form-control'|attr:'rows:5' }}
+                    <span class="text-danger">{{ form.city.errors }}</span>
+
+                </div>
+                {% if form.company.errors %}
+                    <div class="col-md-12">
+                        {% for error in form.company.errors %}
+                            <span class="text-danger">Company: {{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+
+                <div class="col-md-12">
+                    <span class="text-danger">
+                        {{ form.non_field_errors }}
+                    </span>
+                </div>
+
+
+            </div>
+            {{ form.company }}
+            {% csrf_token %}
+            <button class="btn btn-primary my-3 col-md-12 mx-auto">Add Job</button>
+        </form>
+    </div>
+{% endblock %}

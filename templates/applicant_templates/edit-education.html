@@ -1,0 +1,133 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    {% if formset.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Please correct the errors below.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    <div class="container w-100 p-3">
+        <h1 class="my-3 text-center">Edit Education</h1>
+        <form method="post">
+            {{ formset.management_form }}
+            {% for form in formset %}
+                <div class="accordion" id="accordion-parent">
+                    {% with form.institution.auto_id|add:'_accordion' as accordion_id %}
+                        <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button bg-white text-body" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#{{ accordion_id }}" aria-expanded="true">
+                                <div class="row">
+                                    {% if form.program.value %}
+                                        <div class="col-md-12 mb-1">
+                                            <i class="bi bi-mortarboard-fill mx-2"></i> {{ form.program.value }}
+                                        </div>
+                                        {% if form.institution.value %}
+                                            <div class="col-md-12 text-secondary mb-1">
+                                                <i class="bi bi-mortarboard-fill mx-2 invisible"></i>
+                                                <small>{{ form.institution.value }}</small>
+                                            </div>
+                                        {% endif %}
+                                        {% if form.location.value %}
+                                            <div class="col-md-12 text-secondary mb-1">
+                                                <i class="bi bi-mortarboard-fill mx-2 invisible"></i>
+                                                <small>{{ form.location.value }}</small>
+                                            </div>
+                                        {% endif %}
+
+                                    {% else %}
+                                        <div class="col-md-12">
+                                            <i class="bi bi-mortarboard-fill mx-2"></i> Add
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </button>
+                        </h2>
+                        <div {% if form.errors %}data-bs-parent="#accordion-parent"{% endif %} id="{{ accordion_id }}"
+                             class="{% if form.errors %}accordion-collapse collapse show {% else %} accordion-collapse collapse {% endif %}">
+                            <div class="row g-1 align-items-center mb-2 p-3">
+                                {{ form.id }}
+
+                                <div class="col-md-7 mb-2">
+                                    {{ form.institution.label|capfirst }}
+                                    {{ form.institution|add_class:'form-control' }}
+                                </div>
+
+                                <div class="col-md-5 mb-2">
+                                    {{ form.degree.label|capfirst }}
+                                    {{ form.degree|add_class:'form-select' }}
+                                </div>
+
+                                <div class="col-md-7">
+                                    <span class="text-danger">{{ form.institution.errors }}</span>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <span class="text-danger">{{ form.degree.errors }}</span>
+                                </div>
+
+                                <div class="col-md-8 mb-2">
+                                    Program/Major
+                                    {{ form.program|add_class:'form-control' }}
+                                </div>
+
+                                <div class="col-md-4 mb-2">
+                                    {{ form.grade.label|capfirst }}
+                                    {{ form.grade|add_class:'form-control' }}
+                                </div>
+
+                                <div class="col-md-8">
+                                    <span class="text-danger">{{ form.program.errors }}</span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <span class="text-danger">{{ form.grade.errors }}</span>
+                                </div>
+
+
+                                <div class="col-md-4 mb-2">
+                                    {{ form.start_date.label|capfirst }}
+                                    {{ form.start_date|add_class:'form-control' }}
+                                </div>
+
+                                <div class="col-md-4 mb-2">
+                                    {{ form.end_date.label|capfirst }}
+                                    {{ form.end_date|add_class:'form-control' }}
+                                </div>
+
+                                <div class="col-md-4 mb-2">
+                                    {{ form.location.label|capfirst }}
+                                    {{ form.location|add_class:'form-control' }}
+                                </div>
+
+                                <div class="col-md-4">
+                                    <span class="text-danger">{{ form.start_date.errors }}</span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <span class="text-danger">{{ form.end_date.errors }}</span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <span class="text-danger">{{ form.location.errors }}</span>
+                                </div>
+
+
+                                <div class="col-auto mx-auto mt-5 mb-2">
+                                    {{ form.DELETE.label|capfirst }}
+                                    {{ form.DELETE|add_class:'form-checkbox-input' }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                    </div>
+                </div>
+            {% endfor %}
+            {% csrf_token %}
+            <div class="row g-3 mt-4">
+                <button class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+
+{% endblock %}

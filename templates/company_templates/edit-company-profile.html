@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="container w-75">
+        <form method="POST" enctype="multipart/form-data">
+            <h1 class="my-3">Edit Company Profile</h1>
+            <div class="row g-3 mb-5 align-items-end">
+
+                <div class="col-md-12 my-3">
+                    {{ form.name.label }}
+                    {{ form.name|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.name.errors }}</span>
+                </div>
+
+                <div class="col-md-12 my-3">
+                    {{ form.description.label }}
+                    {{ form.description|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.description.errors }}</span>
+
+                </div>
+
+                <div class="col-md-12 my-3">
+                    {{ form.benefits.label }}
+                    {{ form.benefits|add_class:'form-control'|attr:'rows:3' }}
+                    <span class="text-danger">{{ form.benefits.errors }}</span>
+
+                </div>
+
+                <div class="col-md-4 my-3">
+                    {{ form.address.label }}
+                    {{ form.address|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.address.errors }}</span>
+
+                </div>
+
+                <div class="col-md-4 my-3">
+                    {{ form.phone.label }}
+                    {{ form.phone|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.phone.errors }}</span>
+
+                </div>
+
+                <div class="col-md-4 my-3">
+                    {{ form.industry.label }}
+                    {{ form.industry|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.industry.errors }}</span>
+
+                </div>
+
+                <div class="col-md-3 my-3">
+                    {{ form.company_website.label }}
+                    {{ form.company_website|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.company_website.errors }}</span>
+
+                </div>
+
+                <div class="col-md-3 my-3">
+                    {{ form.linkedin_profile.label }}
+                    {{ form.linkedin_profile|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.linkedin_profile.errors }}</span>
+
+                </div>
+
+                <div class="col-md-6 my-3">
+                    Logo
+                    {{ form.logo|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.logo.errors }}</span>
+
+                </div>
+
+                <div class="col-md-12 my-3">
+                    <span class="text-danger">
+                        {{ form.non_field_errors }}
+                    </span>
+                </div>
+                <button class="btn btn-primary">Edit Company Profile</button>
+                {% csrf_token %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

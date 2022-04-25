@@ -1,0 +1,93 @@
+<h3 class="fw-light mb-4"><i class="bi bi-briefcase-fill mx-2"></i> Experience
+    {% if can_edit %}
+        <a role="button" href="{% url 'edit experience' %}">
+            <i class="bi bi-pencil-square mx-3 fs-6 text text-primary"></i>
+        </a>
+    {% endif %}
+</h3>
+
+
+{% if not experience %}
+    <p class="mb-5">No work experience information.</p>
+    <span class="mb-2"></span>
+{% else %}
+
+    {% for experience_detail in experience %}
+        <div class="row">
+            {% if experience_detail.role %}
+                <h5 class="fs-3-text my-3">{{ experience_detail.role }}</h5>
+            {% endif %}
+            {% if experience_detail.company %}
+                <p class="mb-2"><i class="bi bi-building"></i> {{ experience_detail.company }}</p>
+            {% endif %}
+
+            {% if experience_detail.start_date %}
+                <p class="text-muted font-size-sm mb-2"><i
+                        class="bi bi-calendar-date"></i> {{ experience_detail.start_date|date:'M Y' }} -
+                    {% if experience_detail.end_date %}
+                        {{ experience_detail.end_date|date:'M Y' }}
+                    {% else %}
+                        present
+                    {% endif %}
+                </p>
+            {% endif %}
+
+            {% if experience_detail.description %}
+                <p class="text-muted font-size-sm">
+                    {{ experience_detail.description|truncatechars:30 }}
+                </p>
+            {% endif %}
+            <hr>
+
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+<h3 class="fw-light my-4"><i class="bi bi-mortarboard-fill mx-2"></i> Education
+    {% if can_edit %}
+        <a role="button" href="{% url 'edit education' %}">
+            <i class="bi bi-pencil-square mx-3 fs-6 text text-primary"></i>
+        </a>
+    {% endif %}
+</h3>
+
+{% if not education %}
+    No education information.
+{% else %}
+    {% for education_detail in education %}
+        <div class="row">
+            {% if education_detail.program %}
+                <h5 class="fs-3-text mb-3">{{ education_detail.program }}</h5>
+            {% endif %}
+            {% if education_detail.degree %}
+                <p class="mb-2"><i class="fa-solid fa-diploma"></i>{{ education_detail.degree }} |
+                    {% if education_detail.institution %}
+                        <i class="fa-solid fa-building-columns"></i> {{ education_detail.institution }}
+                    {% endif %}
+                </p>
+            {% endif %}
+
+
+            {% if education_detail.start_date %}
+                <p class="text-muted font-size-sm mb-2"><i
+                        class="bi bi-calendar-date"></i> {{ education_detail.start_date|date:'M Y' }} -
+                    {% if education_detail.end_date %}
+                        {{ education_detail.end_date|date:'M Y' }}
+                    {% else %}
+                        present
+                    {% endif %}
+                </p>
+            {% endif %}
+            {% if education_detail.grade %}
+                <p class="text-muted font-size-small">
+                    Grade: {{ education_detail.grade }}
+                </p>
+            {% endif %}
+        </div>
+        {% if not forloop.last %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+

@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h2 class="text-center my-3">All Jobs ({{ paginator.count }})</h2>
+    <div class="container mt-5 d-flex flex-column align-items-center">
+        {% for job in jobs %}
+            {% include 'partials/job_card.html' %}
+        {% endfor %}
+
+    </div>
+    {% include 'partials/paginator.html' %}
+
+{% endblock %}

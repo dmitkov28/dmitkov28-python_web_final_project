@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="container">
+        <div class="row g-3 mt-5">
+            <form action="{{ form_action }}" method="post" class="col-md-6 border p-3 mx-auto">
+                <h1 class="mb-5 text-center">
+                    {% if request.path == '/company/register' %}
+                        Register Company
+                    {% else %}
+                        Register
+                    {% endif %}
+                </h1>
+                <div class="row g-3">
+                    <div class="col-md-12 my-3">
+                        {{ form.email.label }}
+                        {{ form.email|add_class:'form-control' }}
+                        <span class="text-danger">{{ form.email.errors }}</span>
+                    </div>
+
+                    <div class="col-md-12">
+                        {{ form.password1.label }}
+                        {{ form.password1|add_class:'form-control' }}
+                        <span class="text-danger">{{ form.password1.errors }}</span>
+                    </div>
+
+                    <div class="col-md-12">
+                        Confirm Password
+                        {{ form.password2|add_class:'form-control' }}
+                        <span class="text-danger">{{ form.password2.errors }}</span>
+                    </div>
+
+                </div>
+
+                {% csrf_token %}
+                <div class="row mt-3">
+                    <div class="col-md-12 mt-3">
+                        <button class="btn btn-primary w-100">Register</button>
+                    </div>
+                </div>
+                {% if request.path == '/register' %}
+                    <div class="row">
+                        <p class="col-md-12 text-center my-3">Are you an employer? <a
+                                href="{% url 'company register' %}">Register as a Company</a></p>
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

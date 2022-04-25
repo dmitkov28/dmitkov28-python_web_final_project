@@ -1,0 +1,29 @@
+{# if the logged in user is a company #}
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+       data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-building"></i>
+        {% if request.user.companyprofile.name %}
+            {{ request.user.companyprofile.name }}
+        {% endif %}
+    </a>
+
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item"
+               href="{% url 'company profile' request.user.pk %}">Profile</a>
+
+        <li>
+            <a href="{% url 'company jobs' request.user.pk %}" class="dropdown-item">Jobs Posted</a>
+        </li>
+
+        <li>
+            <a href="{% url 'add job' %}" class="dropdown-item">Add Job</a>
+        </li>
+
+        <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="{% url 'logout' %}"><i
+                class="bi bi-box-arrow-right"></i>
+            Logout</a></li>
+    </ul>
+</li>
