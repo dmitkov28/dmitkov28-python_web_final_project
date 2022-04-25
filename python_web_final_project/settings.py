@@ -3,20 +3,22 @@ from pathlib import Path
 
 import cloudinary
 import dj_database_url
-import environ
+
 from django.urls import reverse_lazy
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv()
 
 
 def is_development():
     return os.getenv('APP_ENVIRONMENT') == 'Development'
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9+nnt%!(osre3k)pjldbqw^zxf$sgorsd)4@84dg63*8-x&+0*'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True if is_development() else False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
@@ -24,7 +26,6 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'job-market-softuni.herokuapp.com',
 ]
-
 
 DJANGO_APPS = (
     'django.contrib.admin',
@@ -81,12 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'python_web_final_project.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 DB = {
     'ENGINE': 'django.db.backends.postgresql',
@@ -99,11 +94,9 @@ DB = {
 
 # use development postgres if environment is development
 DATABASES = {
-    'default': DB
+    'default': DB,
 }
 
-if os.getenv('APP_ENVIRONMENT') == 'Production':
-    DATABASES['default'] = dj_database_url.config()
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -153,3 +146,4 @@ cloudinary.config(
     api_key=os.getenv('CLOUDINARY_API_KEY', None),
     api_secret=os.getenv('CLOUDINARY_API_SECRET', None),
 )
+
