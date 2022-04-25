@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 {% block content %}
     <div class="container">
-        <div class="row g-3 mt-5">
+        <div class="row g-3 my-3">
             <form action="{{ form_action }}" method="post" class="col-md-6 border p-3 mx-auto">
                 <h1 class="mb-5 text-center">
                     {% if request.path == '/company/register' %}
@@ -30,6 +30,7 @@
                         <span class="text-danger">{{ form.password2.errors }}</span>
                     </div>
 
+                    {{ form.is_company }}
                 </div>
 
                 {% csrf_token %}

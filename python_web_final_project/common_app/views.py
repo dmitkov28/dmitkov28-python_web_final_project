@@ -60,10 +60,10 @@ class JobDetailsView(views.DetailView):
     template_name = 'common_templates/job-details.html'
 
     def get_object(self, queryset=None):
-        return Job.objects.get(pk=self.kwargs['pk'])
+        return get_object_or_404(Job, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['can_apply'] = False if self.request.user.is_company else True
+        context['can_apply'] = True if (self.request.user.is_authenticated and not self.request.user.is_company) else False
         context['can_edit'] = True if self.request.user == self.get_object().company else False
         return context
