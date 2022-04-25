@@ -18,7 +18,7 @@ environ.Env.read_env(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9+nnt%!(osre3k)pjldbqw^zxf$sgorsd)4@84dg63*8-x&+0*'
+SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = True
 
@@ -83,8 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'python_web_final_project.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 # DATABASES = {
 #     'default': {
@@ -104,10 +102,6 @@ DATABASES = {
     }
 }
 
-
-
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
