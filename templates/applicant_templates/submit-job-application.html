@@ -3,33 +3,27 @@
 {% block content %}
     <form method="post" enctype="multipart/form-data">
         <div class="container w-75">
-            <h1 class="my-3">Apply for {{ form.initial.job.role }} at {{ form.initial.job.company.companyprofile.name }}</h1>
+            <h1 class="my-3">Apply for {{ job.role }} at {{ job.company.companyprofile.name }}</h1>
             <div class="row g-3">
                 <div class="col-md-12 mb-3">
                     Message
                     {{ form.message|add_class:'form-control'|attr:'rows:5' }}
+                    <span class="text-danger">{{ form.message.errors }}</span>
+
                 </div>
 
-                <div class="col-md-12">
-                    <span class="text-danger">{{ form.message.errors }}</span>
-                </div>
                 <div class="col-md-6 mb-3">
                     Upload CV
                     {{ form.cv|add_class:'form-control' }}
+                    <span class="text-danger">{{ form.cv.errors }}</span>
                 </div>
                 <div class="col-md-6 mb-3">
                     Upload additional documents
                     {{ form.additional_documents|add_class:'form-control' }}
-                </div>
-                <div class="col-md-6">
-                    <span class="text-danger">{{ form.cv.errors }}</span>
-                </div>
-                <div class="col-md-6">
                     <span class="text-danger">{{ form.additional_documents.errors }}</span>
                 </div>
+
             </div>
-            {{ form.user }}
-            {{ form.job }}
             <span class="text-danger">
                 {{ form.non_field_errors }}
             </span>

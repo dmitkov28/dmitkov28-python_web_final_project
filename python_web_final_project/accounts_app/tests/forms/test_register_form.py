@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from python_web_final_project.accounts_app.forms import RegisterForm
+from python_web_final_project.accounts_app.forms import RegisterApplicantForm
 from python_web_final_project.applicants_app.models.main_models import ApplicantProfile
 from python_web_final_project.companies_app.models import CompanyProfile
 
@@ -15,11 +15,11 @@ class TestRegisterForm(TestCase):
     }
 
     def test_valid_form__expect_valid(self):
-        form = RegisterForm(self.VALID_USER_DATA)
+        form = RegisterApplicantForm(self.VALID_USER_DATA)
         self.assertTrue(form.is_valid())
 
     def test_valid_form_expect_correct_applicant_profile_created(self):
-        form = RegisterForm(self.VALID_USER_DATA)
+        form = RegisterApplicantForm(self.VALID_USER_DATA)
         form.save()
         user = UserModel.objects.first()
         profile = ApplicantProfile.objects.first()
@@ -29,7 +29,7 @@ class TestRegisterForm(TestCase):
     def test_valid_form_is_company_expect_correct_company_profile_created(self):
         user_is_company = {'is_company': True}
         self.VALID_USER_DATA.update(user_is_company)
-        form = RegisterForm(self.VALID_USER_DATA)
+        form = RegisterApplicantForm(self.VALID_USER_DATA)
         form.save()
         profile = CompanyProfile.objects.first()
         user = UserModel.objects.first()

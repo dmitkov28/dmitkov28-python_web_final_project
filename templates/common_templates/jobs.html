@@ -3,11 +3,15 @@
 
     <div class="container mt-5 d-flex flex-column align-items-center">
         <h1 class="mb-3">Job Posts by {{ profile.name }}</h1>
-        <div class="row g-3">
-            {% for job in jobs %}
-                {% include 'partials/job_card.html' %}
-            {% endfor %}
-        </div>
+        {% if not jobs %}
+            <p class="my-3">There are currently no job posts by this company.</p>
+        {% else %}
+            <div class="row g-3">
+                {% for job in jobs %}
+                    {% include 'partials/job_card.html' %}
+                {% endfor %}
+            </div>
+        {% endif %}
         {% include 'partials/paginator.html' %}
     </div>
 {% endblock %}

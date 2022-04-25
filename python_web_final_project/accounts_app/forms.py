@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import forms as auth_forms, get_user_model
+from django.core.exceptions import ValidationError
 
 from python_web_final_project.applicants_app.models.main_models import ApplicantProfile
 from python_web_final_project.companies_app.models import CompanyProfile
@@ -12,24 +13,43 @@ class LoginForm(auth_forms.AuthenticationForm):
         super().__init__(*args, **kwargs)
 
 
-
-class RegisterForm(auth_forms.UserCreationForm):
+class RegisterBaseForm(auth_forms.UserCreationForm):
     class Meta:
         model = UserModel
-        fields = ('email', 'password1', 'password2', 'is_company')
+        fields = ('email', 'password1', 'password2')
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['is_company'].widget = forms.HiddenInput()
+
+class RegisterApplicantForm(RegisterBaseForm):
 
     def save(self, commit=True):
         user = super().save(commit=True)
-        if not user.is_company:
-            profile = ApplicantProfile(user=user)
+        profile = ApplicantProfile(user=user)
+        profile.save()
+        return user
 
-        else:
-            profile = CompanyProfile(user=user)
 
-        if commit:
-            profile.save()
+class RegisterCompanyForm(RegisterBaseForm):
+    COMPANY_EXISTS_MESSAGE = 'A company with this name already exists.'
+
+    company_name = forms.CharField(
+        max_length=CompanyProfile.COMPANY_NAME_MAX_LENGTH,
+    )
+
+    def clean(self):
+        if CompanyProfile.objects.filter(name=self.cleaned_data['company_name']).exists():
+            raise ValidationError(self.COMPANY_EXISTS_MESSAGE)
+
+        return super().clean()
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_company = True
+        user.save()
+
+        profile = CompanyProfile(
+            name=self.cleaned_data['company_name'],
+            user=user,
+        )
+
+        profile.save()
         return user

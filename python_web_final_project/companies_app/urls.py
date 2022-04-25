@@ -3,7 +3,6 @@ from django.urls import path
 from python_web_final_project.companies_app import views
 
 urlpatterns = (
-    path('register', views.CompanyRegisterView.as_view(), name='company register'),
     path('edit-profile', views.CompanyEditProfileView.as_view(), name='edit company profile'),
     path('add-job', views.CompanyAddJobView.as_view(), name='add job'),
     path('job/<int:pk>/edit', views.CompanyEditJobView.as_view(), name='edit job'),

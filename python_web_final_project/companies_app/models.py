@@ -80,9 +80,6 @@ class CompanyProfile(models.Model):
 
     )
 
-    def clean(self):
-        if not self.user.is_company:
-            raise ValidationError(self.USER_IS_NOT_COMPANY_MESSAGE)
 
     def __str__(self):
-        return self.name if self.name else 'Unknown'
+        return self.name if self.name else 'Unknown Company'

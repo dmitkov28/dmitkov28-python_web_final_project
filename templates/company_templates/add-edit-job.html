@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container pb-3">
         <form method="POST">
-            <h1 class="text-center my-4">Add Job</h1>
+            <h1 class="text-center my-4">{{ form_action }}</h1>
             <div class="row g-3 w-100">
 
                 <div class="col-md-4">
@@ -83,9 +83,8 @@
 
 
             </div>
-            {{ form.company }}
             {% csrf_token %}
-            <button class="btn btn-primary my-3 col-md-12 mx-auto">Add Job</button>
+            <button class="btn btn-primary my-3 col-md-12 mx-auto">{{ form_action }}</button>
         </form>
     </div>
 {% endblock %}

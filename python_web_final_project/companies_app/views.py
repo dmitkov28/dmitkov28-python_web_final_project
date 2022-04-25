@@ -4,28 +4,14 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic as views
 
-from python_web_final_project.accounts_app.views import UserRegisterView
+from python_web_final_project.accounts_app.forms import RegisterCompanyForm
+from python_web_final_project.accounts_app.views import UserRegisterBaseView
 from python_web_final_project.common_app.models import Job, JobApplication
-from python_web_final_project.companies_app.forms import CompanyEditProfileForm, CompanyJobForm
+from python_web_final_project.companies_app.forms import CompanyEditProfileForm, CompanyAddEditForm
 from python_web_final_project.companies_app.models import CompanyProfile
 from python_web_final_project.helpers.mixins.custom_user_passes_test_mixins import UserIsCompanyTestMixin, \
     user_is_company
 from python_web_final_project.helpers.mixins.view_mixins import CompanyAddEditJobMixin
-
-
-class CompanyRegisterView(UserRegisterView):
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        context['form_action'] = reverse_lazy('company register')
-        return context
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['initial'] = {
-            'is_company': True,
-        }
-        return kwargs
 
 
 class CompanyEditProfileView(LoginRequiredMixin, UserIsCompanyTestMixin, views.UpdateView):
@@ -41,6 +27,10 @@ class CompanyEditProfileView(LoginRequiredMixin, UserIsCompanyTestMixin, views.U
 
 
 class CompanyAddJobView(LoginRequiredMixin, CompanyAddEditJobMixin, UserIsCompanyTestMixin, views.CreateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_action'] = 'Add Job'
+        return context
 
     def get_success_url(self):
         success_url = reverse_lazy('company jobs', kwargs={'pk': self.request.user.pk})
@@ -48,15 +38,17 @@ class CompanyAddJobView(LoginRequiredMixin, CompanyAddEditJobMixin, UserIsCompan
 
 
 class CompanyEditJobView(LoginRequiredMixin, CompanyAddEditJobMixin, UserIsCompanyTestMixin, views.UpdateView):
-    template_name = 'company_templates/add-job.html'
-    form_class = CompanyJobForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_action'] = 'Edit Job'
+        return context
 
     def get_object(self, queryset=None):
-        job = Job.objects.get(pk=self.kwargs['pk'])
-        return job
+        return get_object_or_404(Job, pk=self.kwargs['pk'])
 
     def get_success_url(self):
-        return reverse_lazy('company jobs', kwargs={'pk': self.request.user.pk})
+        return reverse_lazy('job details', kwargs={'pk': self.kwargs['pk']})
 
 
 class CompanyJobApplicationsView(LoginRequiredMixin, UserIsCompanyTestMixin, views.ListView):
@@ -75,4 +67,4 @@ def delete_job(request, pk):
     if request.method == 'POST':
         job.delete()
         return redirect(reverse_lazy('company jobs', kwargs={'pk': request.user.pk}))
-    return redirect(reverse('job details', kwargs={'pk':job.pk}))
+    return redirect(reverse('job details', kwargs={'pk': job.pk}))

@@ -18,28 +18,28 @@ class ApplicantEditProfileForm(forms.ModelForm):
 
 
 class ApplicantSubmitJobApplicationForm(forms.ModelForm):
-    INVALID_USER_MESSAGE = 'Invalid user.'
-    INVALID_JOB_MESSAGE = 'Invalid job.'
+    USER_ALREADY_APPLIED_FOR_JOB_MESSAGE = 'User has already applied for this job.'
 
     class Meta:
         model = JobApplication
-        fields = '__all__'
+        exclude = ('job', 'user')
 
-    def __init__(self, submitter, job, *args, **kwargs):
+    def __init__(self, user, job, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.submitter = submitter
+        self.user = user
         self.job = job
-        self.fields['user'].widget = forms.HiddenInput()
-        self.fields['job'].widget = forms.HiddenInput()
 
     def clean(self):
-        if self.cleaned_data.get('user', None) != self.submitter:
-            raise ValidationError(self.INVALID_USER_MESSAGE)
+        if JobApplication.objects.filter(user=self.user, job=self.job).exists():
+            raise ValidationError(self.USER_ALREADY_APPLIED_FOR_JOB_MESSAGE)
 
-        if self.cleaned_data.get('job', None) != self.job:
-            raise ValidationError(self.INVALID_JOB_MESSAGE)
+    def save(self, commit=True):
+        application = super().save(commit=False)
+        application.job = self.job
+        application.user = self.user
 
-        return super().clean()
+        application.save()
+        return application
 
 
 ApplicantEditTechnicalSkillsFormset = inlineformset_factory(UserModel, TechnicalSkill, fields='__all__', extra=1)

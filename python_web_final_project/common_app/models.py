@@ -12,7 +12,6 @@ class Job(models.Model):
     ROLE_MAX_LENGTH = 120
     CATEGORY_MAX_LENGTH = 60
     LOCATION_MAX_LENGTH = 100
-    INVALID_USER_MESSAGE = 'User must be a company.'
 
     EXPERIENCE_LEVELS = (
         'Entry',
@@ -81,9 +80,6 @@ class Job(models.Model):
         related_name='bookmarked_by'
     )
 
-    def clean(self):
-        if not self.company.is_company:
-            raise ValidationError(self.INVALID_USER_MESSAGE)
 
     def __str__(self):
         return f'{self.role} ({self.date_added})'

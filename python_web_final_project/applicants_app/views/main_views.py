@@ -101,21 +101,19 @@ class ApplicantSubmitJobApplicationView(LoginRequiredMixin, UserIsApplicantTestM
     template_name = 'applicant_templates/submit-job-application.html'
     success_url = reverse_lazy('job applications')
 
+    def get_job(self):
+        return get_object_or_404(Job, pk=self.kwargs['pk'])
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['submitter'] = self.request.user
-        kwargs['job'] = Job.objects.get(pk=self.kwargs['pk'])
+        kwargs['user'] = self.request.user
+        kwargs['job'] = self.get_job()
         return kwargs
-
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['user'] = self.request.user
-        initial['job'] = Job.objects.get(pk=self.kwargs['pk'])
-        return initial
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Job Market | Apply for Job'
+        context['job'] = self.get_job()
         return context
 
 

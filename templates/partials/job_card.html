@@ -1,7 +1,7 @@
 {% load static %}
 <div class="card mb-5 col-md-12">
     <div class="row g-0">
-        <div class="col-md-2 d-flex align-items-center">
+        <div class="col-md-2 d-flex align-items-center p-2">
             {% if job.company.companyprofile.logo %}
                 <img class="img-fluid" src="{{ job.company.companyprofile.logo.url }}">
             {% else %}
@@ -67,6 +67,9 @@
 
                 {% if can_edit %}
                     <div class="row g-3">
+                    <span class="col-auto my-2">
+                        <a class="btn btn-primary" href="{% url 'edit job' job.pk %}">Edit</a>
+                    </span>
                         <span class="col-auto my-2">
                             <form action="{% url 'delete job' job.pk %}" method="POST">
                             <button class="btn btn-danger mx-auto" href="{% url 'delete job' job.pk %}">Delete</button>
