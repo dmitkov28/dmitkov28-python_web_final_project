@@ -8,22 +8,15 @@ from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env(
-    DEBUG=(bool, False)
-)
-
-environ.Env.read_env(BASE_DIR / '.env')
 
 def is_development():
-    return env('APP_ENVIRONMENT') == 'Development'
+    return os.getenv('APP_ENVIRONMENT') == 'Development'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-9+nnt%!(osre3k)pjldbqw^zxf$sgorsd)4@84dg63*8-x&+0*'
 
-DEBUG = True
+DEBUG = True if is_development() else False
 
 ALLOWED_HOSTS = [
     '0.0.0.0',
@@ -32,7 +25,6 @@ ALLOWED_HOSTS = [
     'job-market-softuni.herokuapp.com',
 ]
 
-# Application definition
 
 DJANGO_APPS = (
     'django.contrib.admin',
@@ -98,21 +90,17 @@ WSGI_APPLICATION = 'python_web_final_project.wsgi.application'
 
 DEV_DB = {
     'ENGINE': 'django.db.backends.postgresql',
-    'NAME': env('DB_NAME'),
-    'USER': env('DB_USER'),
-    'PASSWORD': env('DB_PASSWORD'),
-    'HOST': env('DB_HOST'),
-    'PORT': env('DB_PORT'),
+    'NAME': os.getenv('DB_NAME'),
+    'USER': os.getenv('DB_USER'),
+    'PASSWORD': os.getenv('DB_PASSWORD'),
+    'HOST': os.getenv('DB_HOST'),
+    'PORT': os.getenv('DB_PORT'),
 }
 
-
-
-#use development postgres if environment is development
+# use development postgres if environment is development
 DATABASES = {
     'default': DEV_DB if is_development() else dj_database_url.config(conn_max_age=600, ssl_require=True),
 }
-
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -128,9 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -152,9 +137,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
 MEDIA_URL = '/media/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts_app.CustomUser'
@@ -163,7 +145,7 @@ LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGIN_URL = reverse_lazy('login')
 
 cloudinary.config(
-    cloud_name=env('CLOUDINARY_CLOUD_NAME', None),
-    api_key=env('CLOUDINARY_API_KEY', None),
-    api_secret=env('CLOUDINARY_API_SECRET', None),
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', None),
+    api_key=os.getenv('CLOUDINARY_API_KEY', None),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET', None),
 )
