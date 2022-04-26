@@ -9,8 +9,7 @@ UserModel = get_user_model()
 
 
 class LoginForm(auth_forms.AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    pass
 
 
 class RegisterBaseForm(auth_forms.UserCreationForm):

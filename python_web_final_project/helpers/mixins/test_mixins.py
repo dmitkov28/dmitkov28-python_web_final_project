@@ -75,3 +75,14 @@ class CreateCompanyAndJobMixin:
 
         return job
 
+
+class FormsetTestDataMixin:
+    VALID_TECHNICAL_SKILL_FORMSET_DATA = {
+        'technicalskill_set-0-name': 'Django',
+        'technicalskill_set-0-level': 60,
+        'technicalskill_set-TOTAL_FORMS': '1',
+        'technicalskill_set-INITIAL_FORMS': '0',
+        'technicalskill_set-MIN_NUM_FORMS': '0',
+        'technicalskill_set-MAX_NUM_FORMS': '1000',
+    }
+

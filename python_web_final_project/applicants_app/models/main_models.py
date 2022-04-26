@@ -74,7 +74,9 @@ class ApplicantProfile(models.Model):
 
     @property
     def full_name(self):
-        return f'{self.first_name} {self.last_name}'
+        if self.first_name and self.last_name:
+            return f'{self.first_name} {self.last_name}'
+        return f'User {self.pk}'
 
     def __str__(self):
         return self.full_name

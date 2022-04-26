@@ -23,15 +23,15 @@ class UserRegisterBaseView(UserIsAuthenticatedTestMixin, views.CreateView):
         login(self.request, self.object)
         return result
 
+
 class ApplicantRegisterView(UserRegisterBaseView):
-    template_name = 'accounts/register.html'
+    template_name = 'accounts/register-applicant.html'
     form_class = RegisterApplicantForm
 
 
 class CompanyRegisterView(UserRegisterBaseView):
     template_name = 'accounts/register-company.html'
     form_class = RegisterCompanyForm
-
 
 
 class UserLogoutView(auth_views.LogoutView):

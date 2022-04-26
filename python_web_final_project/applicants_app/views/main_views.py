@@ -117,7 +117,7 @@ class ApplicantSubmitJobApplicationView(LoginRequiredMixin, UserIsApplicantTestM
         return context
 
 
-class ApplicantJobApplications(LoginRequiredMixin, UserIsApplicantTestMixin, views.ListView):
+class ApplicantJobApplicationsView(LoginRequiredMixin, UserIsApplicantTestMixin, views.ListView):
     template_name = 'applicant_templates/job-applications.html'
     context_object_name = 'job_applications'
     paginate_by = 5

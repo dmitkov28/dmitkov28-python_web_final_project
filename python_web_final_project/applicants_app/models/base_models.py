@@ -11,6 +11,7 @@ class SkillsBaseModel(models.Model):
 
     name = models.CharField(
         max_length=NAME_MAX_LENGTH,
+        unique=True,
     )
 
     level = models.IntegerField(
