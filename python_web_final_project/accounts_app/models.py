@@ -27,3 +27,17 @@ class CustomUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     objects = CustomUserManager()
+
+
+class CustomUserProxyCompany(CustomUser):
+    class Meta:
+        proxy = True
+        verbose_name = 'Company'
+        verbose_name_plural = 'Companies'
+
+
+class CustomUserProxyApplicant(CustomUser):
+    class Meta:
+        proxy = True
+        verbose_name = 'Applicant'
+        verbose_name_plural = 'Applicants'
