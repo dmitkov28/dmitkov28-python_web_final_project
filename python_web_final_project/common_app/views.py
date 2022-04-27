@@ -36,7 +36,7 @@ class CompanyProfileView(views.DetailView):
         return context
 
 
-class CompanyJobsView(LoginRequiredMixin, views.ListView):
+class CompanyJobsView(views.ListView):
     template_name = 'common_templates/jobs.html'
     context_object_name = 'jobs'
     paginate_by = 5

@@ -1,4 +1,4 @@
-from python_web_final_project.companies_app.forms import CompanyAddEditForm
+from python_web_final_project.companies_app.forms import CompanyAddEditJobForm
 
 
 class DynamicPaginatorMixin:
@@ -9,9 +9,9 @@ class DynamicPaginatorMixin:
         return paginator
 
 
-class CompanyAddEditJobMixin:
+class CompanyAddEditJobViewMixin:
     template_name = 'company_templates/add-edit-job.html'
-    form_class = CompanyAddEditForm
+    form_class = CompanyAddEditJobForm
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

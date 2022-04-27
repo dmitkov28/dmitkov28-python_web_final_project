@@ -60,11 +60,20 @@ class TestApplicantProfileView(TestCase, CreateUserAndProfileMixin, CreateCompan
         expected_message = ApplicantProfileView.SUPERUSER_MESSAGE
         self.assertContains(response, expected_message)
 
-    def test_get_user_authenticated_and_existing_profile_expect_200(self):
+    def test_get_user_authenticated_correct_profile_expect_200(self):
         self._create_profile(self.user)
         self.client.login(**self.VALID_USER_CREDENTIALS)
         response = self.client.get(reverse('applicant profile', kwargs={'pk': self.user.pk}))
         self.assertEqual(200, response.status_code)
+
+
+    def test_get_user_authenticated_and_existing_profile_expect_can_edit_to_be_true(self):
+        self._create_profile(self.user)
+        self.client.login(**self.VALID_USER_CREDENTIALS)
+        response = self.client.get(reverse('applicant profile', kwargs={'pk': self.user.pk}))
+        can_edit = response.context['can_edit']
+        self.assertTrue(can_edit)
+
 
     def test_correct_template_is_shown(self):
         self._create_profile(self.user)

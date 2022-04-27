@@ -20,7 +20,6 @@ class ApplicantAddEditSkillsBaseView(LoginRequiredMixin, UserIsApplicantTestMixi
         return render(request, self.template_name, context)
 
     def post(self, request):
-        print(request.POST)
         formset = self.form_class(request.POST, instance=self.request.user)
         if formset.is_valid():
             formset.save()
@@ -53,8 +52,10 @@ class ApplicantEditResumeBaseView(LoginRequiredMixin, UserIsApplicantTestMixin, 
         if formset.is_valid():
             formset.save()
             return redirect('applicant profile', pk=self.request.user.pk)
+
         context = {
             'formset': formset,
             'title': 'Job Market | Edit Resume'
         }
+
         return render(request, self.template_name, context)

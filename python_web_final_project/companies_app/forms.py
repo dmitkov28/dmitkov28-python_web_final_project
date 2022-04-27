@@ -10,7 +10,7 @@ class CompanyEditProfileForm(forms.ModelForm):
         exclude = ('user',)
 
 
-class CompanyAddEditForm(forms.ModelForm):
+class CompanyAddEditJobForm(forms.ModelForm):
     class Meta:
         model = Job
         exclude = ('company', 'bookmarked_by',)

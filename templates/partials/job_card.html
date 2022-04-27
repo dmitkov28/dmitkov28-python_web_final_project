@@ -10,13 +10,19 @@
         </div>
         <div class="col-md-10">
             <div class="card-body">
-                <h5 class="card-title mb-3">
+                <h5 class="card-title d-flex align-items-center mb-3">
                     {{ job.role }}
                     {% if request.user.is_authenticated and not request.user.is_company %}
                         {% if request.user not in job.bookmarked_by.all %}
-                            <a href="{% url 'bookmark' job.pk %}"><i class="bi bi-bookmark"></i></a>
+                            <form action="{% url 'bookmark' job.pk %}" method="post">
+                                <button class="btn text-primary"><i class="bi bi-bookmark h5"></i></button>
+                                {% csrf_token %}
+                            </form>
                         {% else %}
-                            <a href="{% url 'bookmark' job.pk %}"><i class="bi bi-bookmark-fill"></i></a>
+                            <form action="{% url 'bookmark' job.pk %}" method="post">
+                                <button class="btn text-primary"><i class="bi bi-bookmark-fill h5"></i></button>
+                                {% csrf_token %}
+                            </form>
                         {% endif %}
                     {% endif %}
                 </h5>

@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
 from python_web_final_project.common_app.models import Job, JobApplication
 
 
@@ -12,3 +11,5 @@ class JobAdmin(admin.ModelAdmin):
 @admin.register(JobApplication)
 class JobAdmin(admin.ModelAdmin):
     pass
+
+

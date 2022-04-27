@@ -32,7 +32,7 @@ class TestApplicantEditProfileView(CreateUserAndProfileMixin, TestCase):
         response = self.client.get(reverse('edit applicant profile'))
         self.assertTemplateUsed(response, 'applicant_templates/edit-profile.html')
 
-    def test_view_returns_correct_form(self):
+    def test_correct_form_is_shown(self):
         self._create_profile(self.user)
         self.client.login(**self.VALID_USER_CREDENTIALS)
         response = self.client.get(reverse('edit applicant profile'))
@@ -40,12 +40,11 @@ class TestApplicantEditProfileView(CreateUserAndProfileMixin, TestCase):
 
     def test_view_returns_correct_profile_object(self):
         profile = self._create_profile(self.user)
-
         self.client.login(**self.VALID_USER_CREDENTIALS)
         response = self.client.get(reverse('edit applicant profile'))
         self.assertEqual(response.context_data['object'], profile)
 
-    def test_view_updates_profile_correctly(self):
+    def test_correct_data_expect_view_to_update_profile_correctly(self):
         self._create_profile(self.user)
         updated_profile_data = {
             'first_name': 'Updated',

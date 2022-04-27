@@ -20,6 +20,7 @@ class ApplicantProfileTest(TestCase, CreateUserAndProfileMixin):
         self.profile.save()
 
         self.assertEqual(self.profile.full_name, 'Test User')
+        self.assertEqual(self.profile.user, self.user)
 
     def test_full_name_when_only_first_name_expect_full_name_to_be_user_and_user_pk(self):
         self.profile.first_name = 'Test'

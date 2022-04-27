@@ -86,7 +86,7 @@ class ApplicantBookmarkedJobsView(LoginRequiredMixin, UserIsApplicantTestMixin, 
     paginate_by = 5
 
     def get_queryset(self):
-        bookmarked_jobs_by_user = Job.objects.filter(bookmarked_by=self.request.user)
+        bookmarked_jobs_by_user = Job.objects.filter(bookmarked_by=self.request.user).order_by('-date_added')
         return bookmarked_jobs_by_user
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -146,10 +146,12 @@ class ApplicantEditWorkExperienceView(ApplicantEditResumeBaseView):
 def bookmark(request, pk):
     user = request.user
     job = Job.objects.get(pk=pk)
-    if user not in job.bookmarked_by.all():
-        job.bookmarked_by.add(user)
-    else:
-        job.bookmarked_by.remove(user)
-    job.save()
+    if request.method == 'POST':
+        if user not in job.bookmarked_by.all():
+            job.bookmarked_by.add(user)
+        else:
+            job.bookmarked_by.remove(user)
+        job.save()
 
     return redirect(request.META.get('HTTP_REFERER'))
+

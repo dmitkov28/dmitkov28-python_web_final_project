@@ -1,6 +1,5 @@
 from cloudinary import models as cloudinary_models
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.db import models
 
 from python_web_final_project.companies_app.models import CompanyProfile
@@ -80,16 +79,12 @@ class Job(models.Model):
         related_name='bookmarked_by'
     )
 
-
     def __str__(self):
         return f'{self.role} ({self.date_added})'
 
 
 class JobApplication(models.Model):
-    message = models.TextField(
-        null=True,
-        blank=True,
-    )
+    message = models.TextField()
 
     cv = cloudinary_models.CloudinaryField(
         'pdf',

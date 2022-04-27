@@ -81,6 +81,9 @@ class ApplicantProfile(models.Model):
     def __str__(self):
         return self.full_name
 
+    class Meta:
+        verbose_name_plural = 'Applicant Profiles'
+
 
 class TechnicalSkill(SkillsBaseModel):
     pass

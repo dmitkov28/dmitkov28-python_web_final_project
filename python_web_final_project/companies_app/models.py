@@ -1,6 +1,5 @@
 from cloudinary import models as cloudinary_models
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -12,7 +11,7 @@ class CompanyProfile(models.Model):
     ADDRESS_MAX_LENGTH = 255
     INDUSTRY_MAX_LENGTH = 65
     PHONE_MAX_LENGTH = 13
-    USER_IS_NOT_COMPANY_MESSAGE = 'User must be a company.'
+
 
     name = models.CharField(
         max_length=COMPANY_NAME_MAX_LENGTH,
@@ -80,6 +79,8 @@ class CompanyProfile(models.Model):
 
     )
 
-
     def __str__(self):
         return self.name if self.name else 'Unknown Company'
+
+    class Meta:
+        verbose_name_plural = 'Company Profiles'

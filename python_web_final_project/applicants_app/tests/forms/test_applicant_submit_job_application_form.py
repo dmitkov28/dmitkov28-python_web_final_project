@@ -3,18 +3,18 @@ from django.test import TestCase
 
 from python_web_final_project.applicants_app.forms import ApplicantSubmitJobApplicationForm
 from python_web_final_project.common_app.models import JobApplication
-from python_web_final_project.helpers.mixins import test_mixins
+from python_web_final_project.helpers.mixins.test_mixins import CreateUserAndProfileMixin, CreateCompanyAndJobMixin
 
 
-class TestApplicantSubmitJobApplicationForm(TestCase, test_mixins.CreateCompanyAndJobMixin,
-                                            test_mixins.CreateUserAndProfileMixin):
+class TestApplicantSubmitJobApplicationForm(TestCase, CreateCompanyAndJobMixin,
+                                            CreateUserAndProfileMixin):
 
     def setUp(self):
         self.user = self._create_user()
         self.company = self._create_company()
         self.job = self._create_job(self.company)
         self.mock_file = SimpleUploadedFile(name='mock.pdf', content=b'')
-        self.valid_form_data = {
+        self.valid_job_application_form_data = {
             'message': 'message',
             'user': self.user,
             'job': self.job,
@@ -25,7 +25,7 @@ class TestApplicantSubmitJobApplicationForm(TestCase, test_mixins.CreateCompanyA
         form = ApplicantSubmitJobApplicationForm(
             user=self.user,
             job=self.job,
-            data=self.valid_form_data,
+            data=self.valid_job_application_form_data,
         )
 
         self.assertTrue(form.is_valid())
@@ -34,7 +34,7 @@ class TestApplicantSubmitJobApplicationForm(TestCase, test_mixins.CreateCompanyA
         form = ApplicantSubmitJobApplicationForm(
             user=self.user,
             job=self.job,
-            data=self.valid_form_data,
+            data=self.valid_job_application_form_data,
         )
         form.save()
         job_application = JobApplication.objects.first()
@@ -47,14 +47,14 @@ class TestApplicantSubmitJobApplicationForm(TestCase, test_mixins.CreateCompanyA
         form = ApplicantSubmitJobApplicationForm(
             user=self.user,
             job=self.job,
-            data=self.valid_form_data,
+            data=self.valid_job_application_form_data,
         )
         form.save()
 
         form = ApplicantSubmitJobApplicationForm(
             user=self.user,
             job=self.job,
-            data=self.valid_form_data,
+            data=self.valid_job_application_form_data,
         )
 
         expected_error_message = ApplicantSubmitJobApplicationForm.USER_ALREADY_APPLIED_FOR_JOB_MESSAGE

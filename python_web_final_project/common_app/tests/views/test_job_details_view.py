@@ -53,7 +53,7 @@ class TestJobDetailsView(TestCase, CreateCompanyAndJobMixin, CreateUserAndProfil
     def test_user_is_different_company_expect_can_edit_to_be_false(self):
         company = self._create_company()
         job = self._create_job(company)
-        company2 = self._create_company(**self.COMPANY_2_CREDENTIALS)
+        self._create_company(**self.COMPANY_2_CREDENTIALS)
         self.client.login(**self.COMPANY_2_CREDENTIALS)
         response = self.client.get(reverse('job details', kwargs={'pk': job.pk}))
         self.assertFalse(response.context['can_edit'])

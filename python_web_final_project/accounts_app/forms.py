@@ -8,10 +8,6 @@ from python_web_final_project.companies_app.models import CompanyProfile
 UserModel = get_user_model()
 
 
-class LoginForm(auth_forms.AuthenticationForm):
-    pass
-
-
 class RegisterBaseForm(auth_forms.UserCreationForm):
     class Meta:
         model = UserModel
