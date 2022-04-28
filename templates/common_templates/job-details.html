@@ -75,6 +75,7 @@
                         {% if can_edit %}
                             <a href="{% url 'edit job' job.pk %}" class="btn btn-primary">Edit</a>
                             <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteJobModal">Delete</a>
+                            <a class="btn btn-info" href="{% url 'applications for job' job.pk %}">View Applications ({{ job.jobapplication_set.count }})</a>
                         {% endif %}
                         {% if can_apply %}
                             <a href="{% url 'submit application' job.pk %}" class="btn btn-primary">Apply</a>

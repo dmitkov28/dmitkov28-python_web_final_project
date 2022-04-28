@@ -1,6 +1,5 @@
 from django.urls import path
 
-import python_web_final_project.applicants_app.views.main_views
 from python_web_final_project.common_app import views
 from python_web_final_project.applicants_app.views import main_views as applicant_views
 

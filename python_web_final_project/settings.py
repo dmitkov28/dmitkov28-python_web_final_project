@@ -18,7 +18,8 @@ def is_development():
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG') == 'True'
+
 
 ALLOWED_HOSTS = [
     '0.0.0.0',

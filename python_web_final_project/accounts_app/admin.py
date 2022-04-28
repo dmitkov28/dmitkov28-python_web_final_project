@@ -9,6 +9,10 @@ from python_web_final_project.companies_app.models import CompanyProfile
 
 UserModel = get_user_model()
 
+admin.site.index_title = 'Job Market'
+admin.site.site_title = 'Job Market'
+admin.site.site_header = 'Job Market Admin'
+
 
 class CompanyProfileInline(admin.StackedInline):
     model = CompanyProfile
@@ -34,7 +38,9 @@ class AdminCompanyUser(admin.ModelAdmin):
 
     def name(self, obj):
         return obj.companyprofile.name
+
     name.admin_order_field = 'companyprofile'
+
 
 class ApplicantProfileInline(admin.StackedInline):
     model = ApplicantProfile
@@ -74,6 +80,7 @@ class AdminApplicantUser(admin.ModelAdmin):
 
     def name(self, obj):
         return obj.applicantprofile.full_name
+
     name.admin_order_field = 'applicantprofile'
 
     def phone(self, obj):
