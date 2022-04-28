@@ -49,12 +49,65 @@ class TestIndexView(TestCase, CreateUserAndProfileMixin, CreateCompanyAndJobMixi
         jobs = self.client.get(reverse('index')).context['jobs']
         self.assertEqual(0, len(jobs))
 
-    def test_when_jobs_expect_correct_queryset(self):
+    def test_when_jobs_and_no_query_expect_correct_queryset(self):
         company = self._create_company()
         self._create_job(company)
         jobs = Job.objects.all()
         response = self.client.get(reverse('index'))
-        self.assertQuerysetEqual(jobs, response.context['jobs'] )
+        self.assertQuerysetEqual(jobs, response.context['jobs'])
+
+    def test_when_jobs_and_no_query_expect_correct_h1(self):
+        company = self._create_company()
+        self._create_job(company)
+        response = self.client.get(reverse('index'))
+        expected_h1 = 'All Jobs (1)'
+        self.assertEqual(expected_h1, response.context['h1'])
+
+    def test_when_no_jobs_and_no_query_expect_correct_h1(self):
+        response = self.client.get(reverse('index'))
+        expected_h1 = 'All Jobs (0)'
+        self.assertEqual(expected_h1, response.context['h1'])
+
+    def test_when_jobs_and_query_expext_correct_queryset(self):
+        company = self._create_company()
+        self._create_job(company)
+        job_2 = Job(
+            role='Engineer',
+            description='Engineering Job',
+            company=company,
+            work_schedule='Full-Time',
+        )
+
+        job_2.full_clean()
+        job_2.save()
+        expected_queryset = Job.objects.filter(role=job_2.role)
+
+        response = self.client.get(reverse('index'), {'query': 'Engineer'})
+        queryset = response.context['jobs']
+        self.assertQuerysetEqual(expected_queryset, queryset)
+
+    def test_when_jobs_and_query_expext_correct_h1(self):
+        company = self._create_company()
+        self._create_job(company)
+        job_2 = Job(
+            role='Engineer',
+            description='Engineering Job',
+            company=company,
+            work_schedule='Full-Time',
+        )
+
+        job_2.full_clean()
+        job_2.save()
+
+        response = self.client.get(reverse('index'), {'query': 'Engineer'})
+        expected_h1 = 'Results for \'Engineer\' (1)'
+        self.assertEqual(expected_h1, response.context['h1'])
+
+
+
+
+
+
 
 
 

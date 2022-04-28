@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.shortcuts import get_object_or_404
 from django.views import generic as views
 
@@ -13,12 +14,27 @@ class IndexView(DynamicPaginatorMixin, views.ListView):
     context_object_name = 'jobs'
     paginate_by = 5
 
+    def get_search_query(self):
+        return self.request.GET.get('query')
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        if not self.get_search_query():
+            context['h1'] = f'All Jobs ({self.get_queryset().count()})'
+        else:
+            context['h1'] = f'Results for \'{self.get_search_query()}\' ({self.get_queryset().count()})'
+
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by('-date_added')
+        q = self.get_search_query()
+        vector = SearchVector('role', 'description')
+        query = SearchQuery(q)
+        if q:
+            queryset = super().get_queryset().annotate(search=vector).filter(search=query).order_by('-date_added')
+        else:
+            queryset = super().get_queryset().filter().order_by('-date_added')
         return queryset
 
 
@@ -64,6 +80,7 @@ class JobDetailsView(views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['can_apply'] = True if (self.request.user.is_authenticated and not self.request.user.is_company) else False
+        context['can_apply'] = True if (
+                    self.request.user.is_authenticated and not self.request.user.is_company) else False
         context['can_edit'] = True if self.request.user == self.get_object().company else False
         return context

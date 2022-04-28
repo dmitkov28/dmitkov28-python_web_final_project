@@ -30,6 +30,3 @@ class UserIsApplicantTestMixin(UserPassesTestMixin):
 def user_is_company(user):
     return user.is_company
 
-
-def user_is_applicant(user):
-    return not user.is_company
