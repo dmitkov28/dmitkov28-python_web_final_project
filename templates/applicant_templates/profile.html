@@ -41,7 +41,7 @@
                             <div class="d-flex flex-column align-items-center text-center">
                                 {% if profile.profile_picture.url %}
                                     <img src="{{ profile.profile_picture.url }}"
-                                         class="rounded-circle" width="150" alt="profile_picture">
+                                         class="rounded-circle" width="150" alt="profile_picture" style="height: 150px;object-fit: cover;">
                                 {% else %}
                                     <img src="{% static 'img/default_profile_picture.jpeg' %}"
                                          class="rounded-circle" width="150" alt="profile_picture">

@@ -11,7 +11,6 @@ class SkillsBaseModel(models.Model):
 
     name = models.CharField(
         max_length=NAME_MAX_LENGTH,
-        unique=True,
     )
 
     level = models.IntegerField(
@@ -28,3 +27,4 @@ class SkillsBaseModel(models.Model):
 
     class Meta:
         abstract = True
+        unique_together = ('name', 'user')

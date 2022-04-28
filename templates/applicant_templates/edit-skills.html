@@ -9,7 +9,7 @@
         </div>
     {% endif %}
 
-    <div class="container w-50 p-3">
+    <div class="container w-100 p-5">
         <h1 class="my-3">{{ h1 }}</h1>
         <form method="post">
             {{ formset.management_form }}
@@ -19,30 +19,25 @@
                     <div class="col-md-5 mb-3">
                         Skill
                         {{ form.name|add_class:'form-control' }}
+                           <span class="text-danger">{{ form.name.errors }}</span>
                     </div>
 
                     <div class="col-md-5 mb-3">
                         Level
                         {{ form.level|add_class:'form-control' }}
+                         <span class="text-danger">{{ form.level.errors }}</span>
                     </div>
 
-                    <div class="col-auto">
+                    <div class="col-auto mx-auto">
                         <div class="form-check">
                             Delete
                             {{ form.DELETE|add_class:'form-check-input' }}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-5">
-                            <span class="text-danger">{{ form.name.errors }}</span>
-                        </div>
-
-                        <div class="col-md-5">
-                            <span class="text-danger">{{ form.level.errors }}</span>
-                        </div>
-
-                        <div class="col-auto">&nbsp;</div>
-
+                        <span class="text-danger">
+                            {{ form.non_field_errors }}
+                        </span>
                     </div>
                     {{ form.id }}
 
@@ -50,7 +45,7 @@
                 </div>
             {% endfor %}
             {% csrf_token %}
-            <div class="row g-3">
+            <div class="row g-3 my-3">
                 <button class="btn btn-primary">Save Changes</button>
             </div>
         </form>
