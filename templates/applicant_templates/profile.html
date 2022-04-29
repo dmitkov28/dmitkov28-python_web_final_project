@@ -182,10 +182,10 @@
                                 <div class="card-body">
                                     <h6 class="d-flex align-items-center mb-3"><i class="bi bi-tools mx-2"></i>Technical
                                         Skills</h6>
-                                    {% if not request.user.technicalskill_set.all %}
+                                    {% if not profile.user.technicalskill_set.all %}
                                         <p>No skills added yet.</p>
                                     {% else %}
-                                        {% for skill in user.technicalskill_set.all %}
+                                        {% for skill in profile.user.technicalskill_set.all %}
                                             <small>{{ skill.name }}</small>
                                             <div class="progress mb-3" style="height: 5px">
                                                 <div class="progress-bar bg-primary" role="progressbar"
@@ -201,7 +201,7 @@
                                     {% if can_edit %}
                                         <div class="add-skill-container d-flex">
                                             <a class="mx-auto" href="{% url 'edit technical skills' %}">
-                                                {% if request.user.technicalskill_set.all|length <= 0 %}
+                                                {% if profile.user.technicalskill_set.all|length <= 0 %}
                                                     <i role="button"
                                                        class="bi bi-plus-circle-fill mx-auto text-primary h4"></i>
                                                 {% else %}
@@ -220,10 +220,10 @@
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h6 class="d-flex align-items-center mb-3">Other Skills</h6>
-                                    {% if not request.user.otherskill_set.all %}
+                                    {% if not profile.user.otherskill_set.all %}
                                         <p>No skills added yet.</p>
                                     {% else %}
-                                        {% for skill in request.user.otherskill_set.all %}
+                                        {% for skill in profile.user.otherskill_set.all %}
                                             <small>{{ skill.name }}</small>
                                             <div class="progress mb-3" style="height: 5px">
                                                 <div class="progress-bar bg-primary" role="progressbar"
@@ -237,7 +237,7 @@
                                     {% if can_edit %}
                                         <div class="add-skill-container d-flex">
                                             <a class="mx-auto" href="{% url 'edit other skills' %}">
-                                                {% if request.user.otherskill_set.all|length <= 0 %}
+                                                {% if profile.user.otherskill_set.all|length <= 0 %}
                                                     <i role="button"
                                                        class="bi bi-plus-circle-fill mx-auto text-primary h4"></i>
                                                 {% else %}

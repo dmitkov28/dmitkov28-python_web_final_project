@@ -36,6 +36,7 @@
                     <i class="bi bi-geo-alt-fill"></i> {{ form.address.label }}
                     {{ form.address|add_class:'form-control' }}
                 </div>
+
                 <div class="col-md-6 my-3">
                     <i class="bi bi-telephone-fill"></i> {{ form.phone.label }}
                     {{ form.phone|add_class:'form-control' }}
@@ -54,7 +55,11 @@
                     <i class="bi bi-github"></i> {{ form.github.label }}
                     {{ form.github|add_class:'form-control' }}
                 </div>
-
+                <div class="col-md-12 my-2">
+                    <span class="text-danger">
+                        {{ form.non_field_errors }}
+                    </span>
+                </div>
                 {% csrf_token %}
                 <button class="btn btn-primary">Edit Profile</button>
             </div>

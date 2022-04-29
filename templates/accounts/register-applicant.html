@@ -12,7 +12,8 @@
                                     class="bi bi-envelope"></i></span>
                             {{ form.email|add_class:'form-control'|attr:'placeholder:Email' }}
                         </div>
-                        <span class="text-danger my-2">{{ form.email.errors }}</span>
+
+                        <span class="text-danger my-3 col-md-12">{{ form.email.errors }}</span>
                     </div>
 
                     <div class="col-md-12">
@@ -22,7 +23,7 @@
                             </span>
                             {{ form.password1|add_class:'form-control'|attr:'placeholder:Password' }}
                         </div>
-                        <span class="text-danger my-2">{{ form.password1.errors }}</span>
+                        <span class="text-danger my-2 col-md-12">{{ form.password1.errors }}</span>
                     </div>
 
                     <div class="col-md-12">
@@ -31,7 +32,7 @@
                                 <i class="bi bi-lock"></i>
                             </span>
                             {{ form.password2|add_class:'form-control'|attr:'placeholder:Confirm Password' }}
-                            <span class="text-danger my-2">{{ form.password2.errors }}</span>
+                            <span class="text-danger my-2 col-md-12">{{ form.password2.errors }}</span>
                         </div>
                     </div>
 

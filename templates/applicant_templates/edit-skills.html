@@ -18,13 +18,13 @@
                 <div class="row g-3 align-items-center">
                     <div class="col-md-5 mb-3">
                         Skill
-                        {{ form.name|add_class:'form-control' }}
+                        {{ form.name|add_class:'form-control'|attr:'placeholder:Enter skill name' }}
                            <span class="text-danger">{{ form.name.errors }}</span>
                     </div>
 
                     <div class="col-md-5 mb-3">
                         Level
-                        {{ form.level|add_class:'form-control' }}
+                        {{ form.level|add_class:'form-control'|attr:'placeholder:Enter Value between 0 and 100' }}
                          <span class="text-danger">{{ form.level.errors }}</span>
                     </div>
 

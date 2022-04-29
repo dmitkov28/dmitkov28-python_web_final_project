@@ -9,24 +9,24 @@
                     <div class="col-md-12 my-2">
                         Company Name
                         {{ form.company_name|add_class:'form-control' }}
-                        <span class="text-danger d-block my-2">{{ form.company_name.errors }}</span>
+                        <span class="text-danger d-block my-2 col-md-12">{{ form.company_name.errors }}</span>
                     </div>
                     <div class="col-md-12 my-2">
                         {{ form.email.label }}
                         {{ form.email|add_class:'form-control' }}
-                        <span class="text-danger d-block my-2">{{ form.email.errors }}</span>
+                        <span class="text-danger d-block my-2 col-md-12">{{ form.email.errors }}</span>
                     </div>
 
                     <div class="col-md-12">
                         {{ form.password1.label }}
                         {{ form.password1|add_class:'form-control' }}
-                        <span class="text-danger d-block my-2">{{ form.password1.errors }}</span>
+                        <span class="text-danger d-block my-2 col-md-12">{{ form.password1.errors }}</span>
                     </div>
 
                     <div class="col-md-12">
                         Confirm Password
                         {{ form.password2|add_class:'form-control' }}
-                        <span class="text-danger d-block my-2">{{ form.password2.errors }}</span>
+                        <span class="text-danger d-block my-2 col-md-12">{{ form.password2.errors }}</span>
                     </div>
 
                 </div>
