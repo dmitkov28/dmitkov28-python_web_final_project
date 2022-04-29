@@ -14,7 +14,7 @@ class TestApplicantJobApplicationsView(TestCase, CreateUserAndProfileMixin, Crea
 
     def test_correct_title_is_shown(self):
         response = self.client.get(reverse('job applications'))
-        expected_title = 'Job Market | My Applications'
+        expected_title = 'Job Market | My Job Applications'
         self.assertEqual(expected_title, response.context['title'])
 
     def test_no_job_applications_expect_empty_queryset(self):

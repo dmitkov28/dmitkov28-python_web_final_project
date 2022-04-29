@@ -17,6 +17,7 @@ class TestJobDetailsView(TestCase, CreateCompanyAndJobMixin, CreateUserAndProfil
 
     def test_existing_job_expect_correct_result(self):
         company = self._create_company()
+        self._create_company_profile(company)
         job = self._create_job(company)
         response = self.client.get(reverse('job details', kwargs={'pk': job.pk}))
         self.assertEqual(200, response.status_code)
@@ -25,6 +26,7 @@ class TestJobDetailsView(TestCase, CreateCompanyAndJobMixin, CreateUserAndProfil
     def test_logged_in_user_expect_can_apply(self):
         self._create_user()
         company = self._create_company()
+        self._create_company_profile(company)
         job = self._create_job(company)
         self.client.login(**self.VALID_USER_CREDENTIALS)
         response = self.client.get(reverse('job details', kwargs={'pk': job.pk}))
@@ -32,12 +34,14 @@ class TestJobDetailsView(TestCase, CreateCompanyAndJobMixin, CreateUserAndProfil
 
     def test_user_not_logged_in_expect_can_apply_to_be_false(self):
         company = self._create_company()
+        self._create_company_profile(company)
         job = self._create_job(company)
         response = self.client.get(reverse('job details', kwargs={'pk': job.pk}))
         self.assertFalse(response.context['can_apply'])
 
     def test_user_is_company_expect_can_apply_to_be_false(self):
         company = self._create_company()
+        self._create_company_profile(company)
         job = self._create_job(company)
         self.client.login(**self.VALID_COMPANY_CREDENTIALS)
         response = self.client.get(reverse('job details', kwargs={'pk': job.pk}))
@@ -45,6 +49,7 @@ class TestJobDetailsView(TestCase, CreateCompanyAndJobMixin, CreateUserAndProfil
 
     def test_user_is_company_that_created_job_expect_can_edit_to_be_true(self):
         company = self._create_company()
+        self._create_company_profile(company)
         job = self._create_job(company)
         self.client.login(**self.VALID_COMPANY_CREDENTIALS)
         response = self.client.get(reverse('job details', kwargs={'pk': job.pk}))
@@ -52,6 +57,7 @@ class TestJobDetailsView(TestCase, CreateCompanyAndJobMixin, CreateUserAndProfil
 
     def test_user_is_different_company_expect_can_edit_to_be_false(self):
         company = self._create_company()
+        self._create_company_profile(company)
         job = self._create_job(company)
         self._create_company(**self.COMPANY_2_CREDENTIALS)
         self.client.login(**self.COMPANY_2_CREDENTIALS)

@@ -14,6 +14,7 @@ class TestApplicantSubmitJobApplicationView(TestCase, CreateUserAndProfileMixin,
     def setUp(self):
         self.user = self._create_user()
         self.company = self._create_company()
+        self.company_profile = self._create_company_profile(self.company)
         self.job = self._create_job(self.company)
         self.mock_file = SimpleUploadedFile(name='mock.pdf', content=b'')
         self.valid_form_data = {

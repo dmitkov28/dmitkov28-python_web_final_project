@@ -87,7 +87,7 @@ class TestApplicantProfileView(TestCase, CreateUserAndProfileMixin, CreateCompan
         self._create_profile(self.user)
         self.client.login(**self.VALID_USER_CREDENTIALS)
         response = self.client.get(reverse('applicant profile', kwargs={'pk': self.user.pk}))
-        expected_title = 'Job Market | Profile'
+        expected_title = f'Job Market | {self.user.applicantprofile.full_name}'
         title = response.context['title']
         self.assertEqual(expected_title, title)
 
