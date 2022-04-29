@@ -1,3 +1,4 @@
+import cloudinary.uploader
 from django import forms
 
 from python_web_final_project.common_app.models import Job
@@ -8,6 +9,12 @@ class CompanyEditProfileForm(forms.ModelForm):
     class Meta:
         model = CompanyProfile
         exclude = ('user',)
+
+    def clean(self):
+        if 'logo' in self.changed_data:
+            if hasattr(self.instance.logo, 'public_id'):
+                cloudinary.uploader.destroy(self.instance.logo.public_id)
+        return super().clean()
 
 
 class CompanyAddEditJobForm(forms.ModelForm):

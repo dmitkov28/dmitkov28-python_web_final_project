@@ -17,3 +17,10 @@ class CompanyAddEditJobViewMixin:
         kwargs = super().get_form_kwargs()
         kwargs['company'] = self.request.user
         return kwargs
+
+
+class AddPageTitleMixin:
+    website_name = 'Job Market'
+
+    def add_page_title(self, title):
+        return f'{self.website_name} | {title}'

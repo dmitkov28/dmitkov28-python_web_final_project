@@ -3,9 +3,10 @@ from django.shortcuts import render, redirect
 from django.views import generic as views
 
 from python_web_final_project.helpers.mixins.custom_user_passes_test_mixins import UserIsApplicantTestMixin
+from python_web_final_project.helpers.mixins.view_mixins import AddPageTitleMixin
 
 
-class ApplicantAddEditSkillsBaseView(LoginRequiredMixin, UserIsApplicantTestMixin, views.View):
+class ApplicantAddEditSkillsBaseView(LoginRequiredMixin, AddPageTitleMixin, UserIsApplicantTestMixin, views.View):
     template_name = 'applicant_templates/edit-skills.html'
     h1 = None
     form_class = None
@@ -15,7 +16,7 @@ class ApplicantAddEditSkillsBaseView(LoginRequiredMixin, UserIsApplicantTestMixi
         context = {
             'formset': formset,
             'h1': self.h1,
-            'title': 'Job Market | Edit Skills',
+            'title': self.add_page_title('Edit Skills'),
         }
         return render(request, self.template_name, context)
 
@@ -29,13 +30,13 @@ class ApplicantAddEditSkillsBaseView(LoginRequiredMixin, UserIsApplicantTestMixi
             context = {
                 'formset': formset,
                 'h1': self.h1,
-                'title': 'Job Market | Edit Skills'
+                'title': self.add_page_title('Edit Skills')
             }
 
             return render(request, self.template_name, context)
 
 
-class ApplicantEditResumeBaseView(LoginRequiredMixin, UserIsApplicantTestMixin, views.View):
+class ApplicantEditResumeBaseView(LoginRequiredMixin, AddPageTitleMixin, UserIsApplicantTestMixin, views.View):
     template_name = None
     form_class = None
 
@@ -43,7 +44,7 @@ class ApplicantEditResumeBaseView(LoginRequiredMixin, UserIsApplicantTestMixin, 
         formset = self.form_class(instance=self.request.user)
         context = {
             'formset': formset,
-            'title': 'Job Market | Edit Resume'
+            'title': self.add_page_title('Edit Resume')
         }
         return render(request, self.template_name, context)
 
@@ -55,7 +56,7 @@ class ApplicantEditResumeBaseView(LoginRequiredMixin, UserIsApplicantTestMixin, 
 
         context = {
             'formset': formset,
-            'title': 'Job Market | Edit Resume'
+            'title': self.add_page_title('Edit Resume')
         }
 
         return render(request, self.template_name, context)

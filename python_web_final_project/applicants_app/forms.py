@@ -1,3 +1,4 @@
+import cloudinary.uploader
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -14,6 +15,13 @@ class ApplicantEditProfileForm(forms.ModelForm):
     class Meta:
         model = ApplicantProfile
         exclude = ('user',)
+
+    def clean(self):
+        if 'profile_picture' in self.changed_data:
+            if hasattr(self.instance.profile_picture, 'public_id'):
+                cloudinary.uploader.destroy(self.instance.profile_picture.public_id)
+
+        return super().clean()
 
 
 class ApplicantSubmitJobApplicationForm(forms.ModelForm):

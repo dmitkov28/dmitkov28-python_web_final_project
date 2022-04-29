@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from python_web_final_project.applicants_app.models.main_models import EducationDetail, WorkExperienceDetail
-from python_web_final_project.applicants_app.views.main_views import ApplicantProfileView
+from python_web_final_project.common_app.views import ApplicantProfileView
 from python_web_final_project.helpers.mixins.test_mixins import CreateUserAndProfileMixin, CreateCompanyAndJobMixin
 
 
