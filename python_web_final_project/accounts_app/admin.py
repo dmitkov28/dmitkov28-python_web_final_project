@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from python_web_final_project.accounts_app.models import CustomUserProxyCompany, CustomUserProxyApplicant
 from python_web_final_project.applicants_app.models.main_models import ApplicantProfile, TechnicalSkill, OtherSkill, \
@@ -85,3 +87,25 @@ class AdminApplicantUser(admin.ModelAdmin):
 
     def phone(self, obj):
         return obj.applicantprofile.phone
+
+
+@admin.register(UserModel)
+class AllUsersAdmin(UserAdmin):
+    form = UserChangeForm
+    add_form = UserCreationForm
+
+    list_display = ('email', 'is_superuser')
+    list_filter = ('email',)
+    fieldsets = (
+        (None, {'fields': ('email', 'password', 'is_superuser', 'is_staff', 'groups', 'is_company')}),
+    )
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2')}
+         ),
+    )
+
+    search_fields = ['email']
+    ordering = ['email']
