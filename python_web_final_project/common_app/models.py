@@ -87,12 +87,14 @@ class JobApplication(models.Model):
     message = models.TextField()
 
     cv = cloudinary_models.CloudinaryField(
+        resource_type='',
         folder='application_documents',
         null=True,
         blank=True,
     )
 
     additional_documents = cloudinary_models.CloudinaryField(
+        resource_type='',
         folder='application_documents',
         null=True,
         blank=True,
