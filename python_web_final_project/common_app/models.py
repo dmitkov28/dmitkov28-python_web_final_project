@@ -114,5 +114,9 @@ class JobApplication(models.Model):
         auto_now_add=True,
     )
 
+    def __str__(self):
+        return f'{self.user} Application for {self.job}'
+
     class Meta:
         unique_together = ('user', 'job')
+        verbose_name_plural = 'Job Applications'

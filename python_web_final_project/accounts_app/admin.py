@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from python_web_final_project.accounts_app.models import CustomUserProxyCompany, CustomUserProxyApplicant
 from python_web_final_project.applicants_app.models.main_models import ApplicantProfile, TechnicalSkill, OtherSkill, \
     EducationDetail, WorkExperienceDetail
-from python_web_final_project.common_app.models import Job
+from python_web_final_project.common_app.models import Job, JobApplication
 from python_web_final_project.companies_app.models import CompanyProfile
 
 UserModel = get_user_model()
@@ -65,7 +65,7 @@ class EducationDetailInline(admin.StackedInline):
 
 
 @admin.register(CustomUserProxyApplicant)
-class AdminApplicantUser(admin.ModelAdmin):
+class ApplicantUserAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'phone')
     fields = ('email',)
 
@@ -109,3 +109,4 @@ class AllUsersAdmin(UserAdmin):
 
     search_fields = ['email']
     ordering = ['email']
+

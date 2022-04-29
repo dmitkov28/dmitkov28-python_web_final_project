@@ -1,6 +1,10 @@
 from django.contrib import admin
 
-from python_web_final_project.common_app.models import Job
+from python_web_final_project.common_app.models import Job, JobApplication
+
+
+class JobApplicationInline(admin.StackedInline):
+    model = JobApplication
 
 
 @admin.register(Job)
@@ -9,6 +13,9 @@ class JobAdmin(admin.ModelAdmin):
     list_display = ('role', 'company_name', 'date_added', 'job_applications')
     search_fields = ('role', 'company')
     exclude = ('bookmarked_by',)
+    inlines = (
+        JobApplicationInline,
+    )
 
     def company_name(self, obj):
         return obj.company.companyprofile.name
