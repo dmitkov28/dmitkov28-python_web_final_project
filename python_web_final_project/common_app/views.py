@@ -69,8 +69,8 @@ class ApplicantProfileView(LoginRequiredMixin, AddPageTitleMixin, views.DetailVi
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        education = EducationDetail.objects.filter(user=self.request.user).order_by('-start_date')
-        experience = WorkExperienceDetail.objects.filter(user=self.request.user).order_by('-start_date')
+        education = EducationDetail.objects.filter(user=self.get_object().user).order_by('-start_date')
+        experience = WorkExperienceDetail.objects.filter(user=self.get_object().user).order_by('-start_date')
         context['can_edit'] = self.request.user == self.get_object().user
         context['education'] = education
         context['experience'] = experience
