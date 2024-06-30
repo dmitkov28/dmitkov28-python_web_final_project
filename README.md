@@ -13,3 +13,33 @@ The app is a job board with the following features:
 - companies can post job ads
 - good ol' Bootstrap CSS 🚀
 
+### Setup
+
+**Docker (recommended)**:
+```
+docker compose up -d
+```
+
+Run locally:
+
+1. Configure a Postgres db instance:
+    
+```
+DB_NAME: "postgres"
+DB_USER: "postgres"
+DB_PASSWORD: "super secret"
+DB_HOST: "postgres"
+DB_PORT: 5432
+```
+
+2. Configure a virtual environment
+```
+pipenv install
+```
+
+3. Start Django
+```
+pipenv shell
+python manage.py runserver
+```
+
