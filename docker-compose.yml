@@ -1,0 +1,43 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    networks:
+      - network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      APP_ENVIRONMENT: "Development"
+      SECRET_KEY: "super secret key"
+      DEBUG: "True"
+      DB_NAME: "postgres"
+      DB_USER: "postgres"
+      DB_PASSWORD: "super secret"
+      DB_HOST: "postgres"
+      DB_PORT: 5432
+  postgres:
+    image: postgres:16.0-bullseye
+    container_name: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - network
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "super secret"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+
+networks:
+  network:
